@@ -48,7 +48,7 @@ Useful for comparing documents side by side or aligning content visually.
 
    ```
    pip install pyinstaller
-   pyinstaller --noconsole --onefile main.py
+   pyinstaller --noconsole --onefile --name mouse_wing main.py
    ```
 
 ---
