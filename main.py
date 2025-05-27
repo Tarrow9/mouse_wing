@@ -39,7 +39,7 @@ def update_line():
     screen_width = root.winfo_screenwidth()
     x, y = pyautogui.position()
     canvas.delete("all")
-    canvas.create_line(0, y, screen_width, y, fill="green", width=3)
+    canvas.create_line(0, y-15, screen_width, y-15, fill="green", width=3)
     root.after(20, update_line)
 
 
