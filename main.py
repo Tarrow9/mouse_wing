@@ -1,3 +1,4 @@
+import ctypes
 import tkinter as tk
 import pyautogui
 import win32con
@@ -6,6 +7,13 @@ import time
 from pystray import Icon, MenuItem, Menu
 from PIL import Image, ImageDraw
 import threading
+
+# Windows 가상 화면 정보 얻기
+user32 = ctypes.windll.user32
+screen_width = user32.GetSystemMetrics(78)  # SM_CXVIRTUALSCREEN
+screen_height = user32.GetSystemMetrics(79)  # SM_CYVIRTUALSCREEN
+screen_x = user32.GetSystemMetrics(76)  # SM_XVIRTUALSCREEN
+screen_y = user32.GetSystemMetrics(77)  # SM_YVIRTUALSCREEN
 
 
 def create_image():
@@ -36,10 +44,9 @@ def make_window_clickthrough(hwnd):
 
 
 def update_line():
-    screen_width = root.winfo_screenwidth()
     x, y = pyautogui.position()
     canvas.delete("all")
-    canvas.create_line(0, y-15, screen_width, y-15, fill="green", width=3)
+    canvas.create_line(0, y - 15, screen_width, y - 15, fill="green", width=3)
     root.after(20, update_line)
 
 
@@ -56,9 +63,9 @@ def initialize_overlay():
 # tkinter 설정
 root = tk.Tk()
 root.title("MyOverlayWindow")
+root.geometry(f"{screen_width}x{screen_height}+{screen_x}+{screen_y}")
 root.overrideredirect(True)
 root.attributes("-topmost", True)
-root.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}+0+0")
 root.attributes("-transparentcolor", "white")
 
 # 캔버스 생성
